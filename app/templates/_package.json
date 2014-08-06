@@ -12,6 +12,7 @@
         "grunt-contrib-uglify": "~0.5.0",
         "grunt-contrib-clean": "~0.6.0",
         "grunt-bower-concat": "~0.3.0",
+        "grunt-concurrent": "~0.5.0",
         "grunt-concat-css": "~0.3.1",
         "grunt-notify": "~0.3.0",
         "grunt-sass": "~0.12.1",

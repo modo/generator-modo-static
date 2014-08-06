@@ -6,11 +6,11 @@ module.exports = function (grunt, options) {
     return {
         templates: {
             files: ['<%= path.templates %>/**/*'],
-            tasks: ['assemble']
+            tasks: ['assemble:development']
         },
         styles: {
             files: ['<%= path.sass %>/**/*.scss'],
-            tasks: ['sass:dev']
+            tasks: ['sass:development']
         },
         libs: {
             files: ['<%= path.cwd %>/bower.json'],
