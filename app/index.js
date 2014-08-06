@@ -5,6 +5,16 @@ var path = require('path'),
     yeoman = require('yeoman-generator');
 
 module.exports = yeoman.generators.Base.extend({
+    _copyDirectory: function (src, dest) {
+        var self = this,
+            srcFiles = fs.readdirSync(__dirname + '/templates/' + src);
+
+        _.each(srcFiles, function (file) {
+            var filename = path.basename(file);
+            self.copy(path.join(src, filename), path.join(dest, filename.replace('_', '')));
+        });
+    },
+
     promptUser: function () {
         var self = this,
             done = self.async(),
@@ -38,18 +48,20 @@ module.exports = yeoman.generators.Base.extend({
         this.mkdir('grunt');
     },
 
-    copyGruntConfigs: function () {
-        var self = this,
-            configFiles = fs.readdirSync('./templates/grunt');
+    copyPackageFiles: function () {
+        // NPM
+        this.copy('_package.json', 'package.json');
 
+        // Bower
+        this.copy('_bower.json', 'bower.json');
+    },
+
+    copyGruntConfigs: function () {
         // Main Gruntfile
-        self.template("_Gruntfile.js", "Gruntfile.js", { sitename: self.sitename });
+        this.template("_Gruntfile.js", "Gruntfile.js", { sitename: this.siteName });
 
         // Grunt Task Configurations
-        _.each(configFiles, function (file) {
-            var filename = path.basename(file);
-            self.copy(filename, path.join('grunt/', filename.replace('_', '')));
-        });
+        this._copyDirectory('grunt', 'grunt/');
     },
 
     copyJSTemplates: function () {
@@ -57,19 +69,40 @@ module.exports = yeoman.generators.Base.extend({
     },
 
     copySCSSTemplates: function () {
-        var self = this,
-            componentFiles = fs.readdirSync('./templates/sass/components');
-
-        self.copy('sass/_styles.scss', 'front-end/sass/styles.scss');
+        // Main Style File
+        this.copy('sass/_styles.scss', 'front-end/sass/styles.scss');
 
         // Common Components
-        _.each(componentFiles, function (file) {
-            var filename = path.basename(file);
-            self.copy(filename, path.join('front-end/sass/', filename.replace('_', '')));
-        });
+        this._copyDirectory('sass/components', 'front-end/sass/components/');
     },
 
     copyHBSTemplates: function () {
+        // Layouts
+        this._copyDirectory('hbs/layouts', 'front-end/templates/layouts');
 
+        // Pages
+        this._copyDirectory('hbs/pages', 'front-end/templates/pages');
+
+        // Partials
+        this._copyDirectory('hbs/partials', 'front-end/templates/partials');
+
+        // Data
+        this.template('hbs/data/_project.json', 'front-end/templates/data/project.json', { sitename: this.siteName });
+    },
+
+    runNpm: function () {
+        var done = this.async();
+
+        this.npmInstall('', function () {
+            done();
+        });
+    },
+
+    runBower: function () {
+        var done = this.async();
+
+        this.bowerInstall('', function () {
+            done();
+        });
     }
 });
