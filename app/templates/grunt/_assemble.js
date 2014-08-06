@@ -19,7 +19,7 @@ module.exports = function (grunt, options) {
             layoutDir: '<%= path.templates %>/layouts',
             partials: ['<%= path.templates %>/partials/**/*.hbs'],
             helpers: ['<%= path.templates %>/helpers/**/*.js' ],
-            data: ['<%= path.templates %>/data/**/*.json', { sitename: options.project.name }],
+            data: ['<%= path.templates %>/data/**/*.json'],
             flatten: true
         },
         development: {
