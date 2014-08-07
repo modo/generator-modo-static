@@ -1,47 +1,164 @@
-# generator-modo-static [![Build Status](https://secure.travis-ci.org/modo/generator-modo-static.png?branch=master)](https://travis-ci.org/modo/generator-modo-static)
+# Static Site Generator
 
-> [Yeoman](http://yeoman.io) generator
+> [Yeoman](http://yeoman.io) generator for static websites - lets you quickly set up a project using [Handlebars](http://handlebarsjs.com/) for templating & SASS w/ [Bourbon](http://bourbon.io) & [Neat](http://neat.bourbon.io) for styling.
 
 
-## Getting Started
+## Requirements
+* [Node.js](http://nodejs.org)
+* [Grunt CLI](http://gruntjs.org)
+  ```
+  npm install -g grunt-cli
+  ```
+* [Bower](http://bower.io)
+  ```
+  npm install -g bower
+  ```
+* [Yeoman](http://yeoman.io)
+  ```
+  npm install -g yo
+  ```
 
-### What is Yeoman?
+## Grunt Tasks
 
-Trick question. It's not a thing. It's this guy:
+Aliased tasks most useful when developing:
 
-![](http://i.imgur.com/JHaAlBJ.png)
+* [server](#server)
+* [build:development](#build)
+* [build:production](#build)
 
-Basically, he wears a top hat, lives in your computer, and waits for you to tell him what kind of application you wish to create.
+Full list of sub-tasks:
 
-Not every new computer comes with a Yeoman pre-installed. He lives in the [npm](https://npmjs.org) package repository. You only have to ask for him once, then he packs up and moves into your hard drive. *Make sure you clean up, he likes new and shiny things.*
+* [assemble](#assemble)
+* [bower_concat](#bower_concat)
+* [clean](#clean)
+* [concat](#concat)
+* [express](#express)
+* [jshint](#jshint)
+* [notify](#notify)
+* [open](#open)
+* [sass](#sass)
+* [uglify](#uglify)
+* [watch](#watch)
+* [concurrent](#concurrent)
 
-```bash
-$ npm install -g yo
+### server
+Runs `build:development` & opens the project in your browser using a local Express server. Tab automatically reloads when any change is detected.
+```
+grunt server
 ```
 
-### Yeoman Generators
+### build
+Compiles templates, styles, and javascript into the `public` directory
+```
+// Compiles with source maps (when available)
+grunt build:development
 
-Yeoman travels light. He didn't pack any generators when he moved in. You can think of a generator like a plug-in. You get to choose what type of application you wish to create, such as a Backbone application or even a Chrome extension.
-
-To install generator-modo-static from npm, run:
-
-```bash
-$ npm install -g generator-modo-static
+// Compiles without source maps
+grunt build:production
 ```
 
-Finally, initiate the generator:
+---
 
-```bash
-$ yo modo-static
+### assemble
+Compiles handlebars templates into HTML files in `public` directory
 ```
+// Has {{production}} set to false
+grunt assemble:development
 
-### Getting To Know Yeoman
+// Has {{production}} set to true
+grunt assemble:production
+```
+Configuration is in `grunt/assemble.js`
 
-Yeoman has a heart of gold. He's a person with feelings and opinions, but he's very easy to work with. If you think he's too opinionated, he can be easily convinced.
+### bower_concat
+Concatenates all bower_component js into a single library file – `/public/lib/min/libraries.min.js`
+```
+grunt bower_concat
+```
+Configuration is in `grunt/bower_concat.js`. Bower packages typically do not need to be added manually to the configuration, but can use this to exclude & define dependencies.
 
-If you'd like to get to know Yeoman better and meet some of his friends, [Grunt](http://gruntjs.com) and [Bower](http://bower.io), check out the complete [Getting Started Guide](https://github.com/yeoman/yeoman/wiki/Getting-Started).
+### clean
+Removes generated files in `public/` to avoid orphans
+```
+grunt clean
+```
+Configuration is in `grunt/clean.js`
 
+### concat
+Concatenates custom JS files into a single file – `/public/lib/min/scripts.min.js`
+```
+grunt concat
+```
+Configuration is in `grunt/concat.js`
 
-## License
+### concat_css
+Concatenates library css into a single library file – ``/public/lib/min/libraries.css`
+```
+grunt concat_css
+```
+Configuration is in `grunt/concat_css.js`. Files must be manually added to this list, unlike `bower_concat`
 
-MIT
+### express
+Serves up files from `/public` at `localhost:{{port}}`
+```
+grunt express
+```
+Configuration is in `grunt/express.js`
+
+### jshint
+Checks files in `/front-end/js` for common errors and code-style
+```
+grunt jshint
+```
+Configuration is in `grunt/jshint.js`
+
+### notify
+Pops OSX/Growl-style notifications on the desktop when key tasks have completed. This task should not be run directly.
+
+Configuration is in `grunt/notify.js`
+
+### open
+Opens a tab in your default browser to `localhost:{{express.port}}`
+```
+grunt open
+```
+Configuration is in `grunt/open.js`
+
+### sass
+Compiles files from `/front-end/sass` to single CSS at `/public/lib/min/styles.css`
+```
+// Compiles to nested format with source maps
+grunt sass:development
+
+// Compiles to compressed format w/o source maps
+grunt sass:production
+```
+Configuration is in `grunt/sass.js`
+
+### uglify
+Minifies compiled JS files in `/public/lib/min`
+```
+grunt uglify
+```
+Configuration is in `grunt/uglify.js`
+
+### watch
+Watches files for changes for on-the-fly compilation & browser reload
+```
+grunt watch
+```
+Configuration is in `grunt/watch.js`
+
+### concurrent
+Performs multiple tasks at once for speedier builds
+```
+// Compiles site files in development mode
+grunt concurrent:site_development
+
+// Compiles site files in production mode
+grunt concurrent:site_production
+
+// Compiles library files
+grunt concurrent:libraries
+```
+Configuration is in `grunt/concurrent.js`
