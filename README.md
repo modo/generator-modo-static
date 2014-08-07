@@ -60,15 +60,17 @@ grunt build:production
 ---
 
 ### assemble
-Compiles handlebars templates into HTML files in `public` directory
-```shell
-# Has {{production}} set to false
-grunt assemble:development
+Compiles handlebars templates into HTML files in `public` directory. Configuration is in `grunt/assemble.js`
 
-# Has {{production}} set to true
+Has `{{production}}` set to `false`
+```
+grunt assemble:development
+```
+
+Has `{{production}}` set to `true`
+```
 grunt assemble:production
 ```
-Configuration is in `grunt/assemble.js`
 
 ### bower_concat
 Concatenates all bower_component js into a single library file – `/public/lib/min/libraries.min.js`
