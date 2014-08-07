@@ -62,12 +62,12 @@ grunt build:production
 ### assemble
 Compiles handlebars templates into HTML files in `public` directory. Configuration is in `grunt/assemble.js`
 
-Has `{{production}}` set to `false`
+**Has `{{production}}` set to `false`**
 ```
 grunt assemble:development
 ```
 
-Has `{{production}}` set to `true`
+**Has `{{production}}` set to `true`**
 ```
 grunt assemble:production
 ```
