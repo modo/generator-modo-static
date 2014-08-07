@@ -49,11 +49,14 @@ grunt server
 
 ### build
 Compiles templates, styles, and javascript into the `public` directory
-```
-// Compiles with source maps (when available)
-grunt build:development
 
-// Compiles without source maps
+**Runs all compile tasks in development mode**
+```
+grunt build:development
+```
+
+**Runs all compile tasks in production mode,  minifying output
+```
 grunt build:production
 ```
 
