@@ -4,6 +4,7 @@
 
 
 ## Requirements
+
 * [Node.js](http://nodejs.org)
 * [Grunt CLI](http://gruntjs.org)
   ```
@@ -17,6 +18,29 @@
   ```
   npm install -g yo
   ```
+
+## Usage
+
+Clone this generator
+```
+git clone https://github.com/modo/generator-modo-static.git
+```
+
+Link the directory as a local NPM package
+```
+cd generator-modo-static
+npm link
+```
+
+Make a new directory, and `cd` into it:
+```
+mkdir my-new-project && cd $_
+```
+
+Run `yo modo-static`, it will ask you for a site name
+```
+yo modo-static
+```
 
 ## Grunt Tasks
 
