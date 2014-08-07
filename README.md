@@ -61,11 +61,11 @@ grunt build:production
 
 ### assemble
 Compiles handlebars templates into HTML files in `public` directory
-```
-// Has {{production}} set to false
+```shell
+# Has {{production}} set to false
 grunt assemble:development
 
-// Has {{production}} set to true
+# Has {{production}} set to true
 grunt assemble:production
 ```
 Configuration is in `grunt/assemble.js`
@@ -113,9 +113,7 @@ grunt jshint
 Configuration is in `grunt/jshint.js`
 
 ### notify
-Pops OSX/Growl-style notifications on the desktop when key tasks have completed. This task should not be run directly.
-
-Configuration is in `grunt/notify.js`
+Pops OSX/Growl-style notifications on the desktop when key tasks have completed. This task should not be run directly. Configuration is in `grunt/notify.js`
 
 ### open
 Opens a tab in your default browser to `localhost:{{express.port}}`
